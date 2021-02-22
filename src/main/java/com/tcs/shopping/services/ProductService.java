@@ -1,39 +1,20 @@
 package com.tcs.shopping.services;
 
-import java.util.List;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
-import com.tcs.shopping.daos.ProductRepo;
 import com.tcs.shopping.entities.ProductEntity;
 
-
+@Validated
 @Service
-@Transactional
-public class ProductService{
+public interface ProductService {
 
-	@Autowired
-    private ProductRepo productRepository;
+    @NotNull Iterable<ProductEntity> getAllProducts();
 
-   
+    ProductEntity getProduct(@Min(value = 1L, message = "Invalid product ID.") long id);
 
-   
-    public List<ProductEntity> getAllProducts() {
-        return (List<ProductEntity>) productRepository.findAll();
-    }
-
-    
-    public ProductEntity getProduct(long id) {
-    	//ModelMapper modelMapper = new ModelMapper();
-        return (ProductEntity) productRepository
-          .findById(id).get();
-    }
-
-    
-    public ProductEntity save(ProductEntity product) {
-        return (ProductEntity) productRepository.save(product);
-    }
+    ProductEntity save(ProductEntity product);
 }

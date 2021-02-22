@@ -2,38 +2,24 @@ package com.tcs.shopping.services;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
-import com.tcs.shopping.daos.OrdersRepo;
 import com.tcs.shopping.entities.OrderEntity;
-
-
 @Service
-@Transactional
-public class OrderService{
+@Validated
+public interface OrderService {
 
-	@Autowired
-    private OrdersRepo ordersRepo;
-
-   
-
-   
-    public List<OrderEntity> getAllProducts() {
-        return (List<OrderEntity>) ordersRepo.findAll();
-    }
-
+    @NotNull List<OrderEntity> getAllOrders();
     
-    public OrderEntity getProduct(long id) {
-    	//ModelMapper modelMapper = new ModelMapper();
-        return (OrderEntity) ordersRepo
-          .findById(id).get();
-    }
+    @NotNull OrderEntity findById(Long id);
 
+    OrderEntity create(@NotNull(message = "The order should not be null.") @Valid OrderEntity order);
+
+    void update(@NotNull(message = "The order should be null.") @Valid OrderEntity order);
     
-    public OrderEntity save(OrderEntity product) {
-        return (OrderEntity) ordersRepo.save(product);
-    }
+    OrderEntity findByIdAndFetchProductsEagerly(Long id);
 }

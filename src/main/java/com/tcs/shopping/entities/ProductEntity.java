@@ -1,46 +1,42 @@
 package com.tcs.shopping.entities;
 
-import java.math.BigDecimal;
+import java.util.Date;
 
-import javax.persistence.Column;
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import com.sun.istack.NotNull;
 
-//@Getter
-//@Setter
-//@AllArgsConstructor
 @Entity
 @Table(name = "t_products")
-public class ProductEntity extends BaseEntity{
-	
+public class ProductEntity extends BaseEntity {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "prdt_name")
-	private String productName;
+	@NotNull
+	@Basic(optional = false)
+	private String name;
+
+	private Double price;
+
+	private String pictureUrl;
+
 	
-	@Column(name = "prdt_type")
-	private String productType;
 	
-	@Column(name = "prdt_units")
-	private String productUnits;
-	
-	@Column(name = "prdt_price")
-	private BigDecimal productPrice;
-	
-	@Column(name = "prdt_desc")
-	private String productDescription;
-	
-	@Column(name = "prdt_img_url")
-	private String imageUrl;
+	public ProductEntity() {}
+	public ProductEntity(String name, Double price, String pictureUrl) {
+		super();
+		this.name = name;
+		this.price = price;
+		this.pictureUrl = pictureUrl;
+		this.setCreatedOn(new Date());
+	}
 
 	public Long getId() {
 		return id;
@@ -50,54 +46,27 @@ public class ProductEntity extends BaseEntity{
 		this.id = id;
 	}
 
-	public String getProductName() {
-		return productName;
+	public String getName() {
+		return name;
 	}
 
-	public void setProductName(String productName) {
-		this.productName = productName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getProductType() {
-		return productType;
+	public Double getPrice() {
+		return price;
 	}
 
-	public void setProductType(String productType) {
-		this.productType = productType;
+	public void setPrice(Double price) {
+		this.price = price;
 	}
 
-	public String getProductUnits() {
-		return productUnits;
+	public String getPictureUrl() {
+		return pictureUrl;
 	}
 
-	public void setProductUnits(String productUnits) {
-		this.productUnits = productUnits;
+	public void setPictureUrl(String pictureUrl) {
+		this.pictureUrl = pictureUrl;
 	}
-
-	public BigDecimal getProductPrice() {
-		return productPrice;
-	}
-
-	public void setProductPrice(BigDecimal productPrice) {
-		this.productPrice = productPrice;
-	}
-
-	public String getProductDescription() {
-		return productDescription;
-	}
-
-	public void setProductDescription(String productDescription) {
-		this.productDescription = productDescription;
-	}
-
-	public String getImageUrl() {
-		return imageUrl;
-	}
-
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
-
-	
-	
 }
